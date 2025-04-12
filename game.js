@@ -155,6 +155,7 @@ standButton.addEventListener('click', () => {
 });
 
 // Check the game outcome
+// Check the game outcome
 function checkGameOver() {
     const playerScore = calculateScore(playerHand);
     const dealerScore = calculateScore(dealerHand);
@@ -163,17 +164,18 @@ function checkGameOver() {
         endGame("You busted! Dealer wins.");
     } else if (dealerScore > 21) {
         endGame("Dealer busted! You win!");
-        balance += currentBet * 2;
+        balance += currentBet * 2;  // Player wins (gets back bet + winnings)
     } else if (playerScore > dealerScore) {
         endGame(`You win! You earned $${currentBet}`);
-        balance += currentBet * 2;
+        balance += currentBet * 2;  // Player wins (gets back bet + winnings)
     } else if (dealerScore > playerScore) {
         endGame(`Dealer wins! You lost $${currentBet}`);
     } else {
         endGame("It's a tie! You get your bet back.");
-        balance += currentBet;
+        balance += currentBet;  // Tie, player gets their bet back
     }
 }
+
 
 // End the game and display the message
 function endGame(message) {
