@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let card of playerHand) {
       playerCardsElement.innerHTML += `<div class="card">${card.value} ${card.suit}</div>`;
     }
+
     for (let card of dealerHand) {
       dealerCardsElement.innerHTML += `<div class="card">${card.value} ${card.suit}</div>`;
     }
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function calculateScore(hand) {
     let score = 0;
     let aceCount = 0;
+
     for (let card of hand) {
       if (card.value === 'A') {
         score += 11;
@@ -76,10 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
         score += parseInt(card.value);
       }
     }
+
     while (score > 21 && aceCount > 0) {
       score -= 10;
       aceCount--;
     }
+
     return score;
   }
 
@@ -169,6 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
     messageElement.textContent = '';
   }
 
-  // Init
+  // Start game on DOM load
   startGame();
 });
