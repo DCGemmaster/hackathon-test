@@ -48,3 +48,33 @@ button:hover {
     font-size: 20px;
     border: 1px solid #ccc;
 }
+/* Style for the balance and bet input */
+.info {
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    font-size: 16px;
+    padding: 5px;
+    width: 80px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+#place-bet {
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#place-bet:hover {
+    opacity: 0.8;
+}
+
