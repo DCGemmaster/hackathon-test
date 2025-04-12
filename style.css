@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2a2a2a;
+    color: white;
+    margin: 0;
+}
+
+.game-container {
+    text-align: center;
+    padding: 20px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    width: 300px;
+    background-color: #333;
+}
+
+h1 {
+    color: #f0f0f0;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.player-cards, .dealer-cards {
+    flex: 1;
+    text-align: left;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.game-info p {
+    margin: 5px;
+}
