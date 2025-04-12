@@ -155,7 +155,6 @@ standButton.addEventListener('click', () => {
 });
 
 // Check the game outcome
-// Check the game outcome
 function checkGameOver() {
     const playerScore = calculateScore(playerHand);
     const dealerScore = calculateScore(dealerHand);
@@ -174,7 +173,11 @@ function checkGameOver() {
         endGame("It's a tie! You get your bet back.");
         balance += currentBet;  // Tie, player gets their bet back
     }
+
+    // Update the displayed balance after the game ends
+    balanceElement.textContent = `Balance: $${balance}`;
 }
+
 
 
 // End the game and display the message
