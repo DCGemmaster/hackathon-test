@@ -48,6 +48,16 @@ function calculateScore(hand) {
     return score;
 }
 
+function getCardSymbol(card) {
+    const suitSymbols = {
+        'Hearts': '♥',
+        'Diamonds': '♦',
+        'Clubs': '♣',
+        'Spades': '♠'
+    };
+    return `<span class="card">${card.value}${suitSymbols[card.suit]}</span>`;
+}
+
 function renderHands(showDealerFull = false) {
     const playerDiv = document.getElementById('player-cards');
     const dealerDiv = document.getElementById('dealer-cards');
@@ -55,23 +65,22 @@ function renderHands(showDealerFull = false) {
     dealerDiv.innerHTML = '';
 
     playerHand.forEach(card => {
-        playerDiv.innerHTML += `<p>${card.value} of ${card.suit}</p>`;
+        playerDiv.innerHTML += getCardSymbol(card);
     });
 
     if (showDealerFull || gameOver) {
         dealerHand.forEach(card => {
-            dealerDiv.innerHTML += `<p>${card.value} of ${card.suit}</p>`;
+            dealerDiv.innerHTML += getCardSymbol(card);
         });
     } else {
-        dealerDiv.innerHTML = `<p>Face-down</p><p>${dealerHand[1].value} of ${dealerHand[1].suit}</p>`;
+        dealerDiv.innerHTML += `<span class="card">🂠</span>`;
+        dealerDiv.innerHTML += getCardSymbol(dealerHand[1]);
     }
 
     document.getElementById('player-score').textContent = 'Your Score: ' + calculateScore(playerHand);
-    if (showDealerFull || gameOver) {
-        document.getElementById('dealer-score').textContent = 'Dealer\'s Score: ' + calculateScore(dealerHand);
-    } else {
-        document.getElementById('dealer-score').textContent = 'Dealer\'s Score: ?';
-    }
+    document.getElementById('dealer-score').textContent = showDealerFull || gameOver
+        ? 'Dealer\'s Score: ' + calculateScore(dealerHand)
+        : 'Dealer\'s Score: ?';
 }
 
 function checkGameOver() {
@@ -148,4 +157,5 @@ document.getElementById('play-again-button').addEventListener('click', () => {
 });
 
 startGame();
+
 
