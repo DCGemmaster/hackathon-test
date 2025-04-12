@@ -128,8 +128,20 @@ function checkGameOver() {
     if (gameOver) {
         document.getElementById('hit-button').disabled = true;
         document.getElementById('stand-button').disabled = true;
+        document.getElementById('play-again-button').style.display = 'inline-block';
+
+        // Reveal full dealer hand
+        const dealerCardsDiv = document.getElementById('dealer-cards');
+        dealerCardsDiv.innerHTML = '';
+        dealerHand.forEach(card => {
+            dealerCardsDiv.innerHTML += `<p>${card.value} of ${card.suit}</p>`;
+        });
+
+        // Update final dealer score
+        document.getElementById('dealer-score').textContent = 'Dealer\'s Score: ' + dealerScore;
     }
 }
+
 // Handle the "Play Again" button
 document.getElementById('play-again-button').addEventListener('click', function () {
     // Reset buttons
