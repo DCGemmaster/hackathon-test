@@ -9,6 +9,15 @@
     <div class="game-container">
         <h1>Blackjack</h1>
 
+        <!-- Balance and Bet Input Section -->
+        <div class="info">
+            <p id="balance">Balance: $100</p>
+            <label for="bet">Place your bet: $</label>
+            <input type="number" id="bet" min="1" max="100" value="10">
+            <button id="place-bet">Place Bet</button>
+        </div>
+
+        <!-- Player and Dealer's Hands -->
         <div class="cards">
             <div class="player-cards">
                 <h2>Your Hand</h2>
@@ -20,13 +29,15 @@
             </div>
         </div>
 
+        <!-- Game Controls -->
         <div class="controls">
             <button id="hit-button">Hit</button>
             <button id="stand-button">Stand</button>
             <button id="play-again-button" style="display: none;">Play Again</button>
         </div>
 
-        <div class="info">
+        <!-- Game Status -->
+        <div class="game-info">
             <p id="message"></p>
             <p id="player-score">Your Score: 0</p>
             <p id="dealer-score">Dealer's Score: 0</p>
@@ -36,6 +47,7 @@
     <script src="game.js"></script>
 </body>
 </html>
+
 
 
 
