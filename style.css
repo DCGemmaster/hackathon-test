@@ -1,3 +1,4 @@
+/* Body and general styles */
 body {
     background: #222;
     color: #fff;
@@ -12,6 +13,7 @@ body {
     margin-top: 30px;
 }
 
+/* Cards Layout */
 .cards {
     display: flex;
     justify-content: space-around;
@@ -37,6 +39,7 @@ button:hover {
     opacity: 0.9;
 }
 
+/* Cards Display */
 .card {
     display: inline-block;
     background: white;
@@ -48,7 +51,8 @@ button:hover {
     font-size: 20px;
     border: 1px solid #ccc;
 }
-/* Style for the balance and bet input */
+
+/* Bet Input and Info Section */
 .info {
     margin-bottom: 20px;
 }
@@ -77,4 +81,13 @@ label {
 #place-bet:hover {
     opacity: 0.8;
 }
+
+.game-info {
+    margin-top: 20px;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
 
