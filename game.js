@@ -1,12 +1,12 @@
-// Global variables
-let balance = 100;  // Starting balance
-let currentBet = 0; // Amount the player bets for each round
+// Global Variables
+let balance = 100;
+let currentBet = 0;
 let deck = [];
 let playerHand = [];
 let dealerHand = [];
 let gameOver = false;
 
-// DOM elements
+// DOM Elements
 const balanceElement = document.getElementById('balance');
 const betInput = document.getElementById('bet');
 const placeBetButton = document.getElementById('place-bet');
@@ -17,45 +17,12 @@ const messageElement = document.getElementById('message');
 const playerCardsElement = document.getElementById('player-cards');
 const dealerCardsElement = document.getElementById('dealer-cards');
 
-// Place bet and start the game
-placeBetButton.addEventListener('click', () => {
-    const betAmount = parseInt(betInput.value);
-    
-    if (betAmount <= 0 || betAmount > balance) {
-        alert("Please place a valid bet.");
-        return;
-    }
-
-    currentBet = betAmount;
-    balance -= currentBet;
+// Update balance in the UI
+function updateBalance() {
     balanceElement.textContent = `Balance: $${balance}`;
-
-    startGame();
-});
-
-// Start the game by creating and shuffling the deck
-function startGame() {
-    createDeck();
-    shuffleDeck();
-    playerHand = [];
-    dealerHand = [];
-    gameOver = false;
-
-    dealCard(playerHand);
-    dealCard(dealerHand);
-    dealCard(playerHand);
-    dealCard(dealerHand);
-
-    renderHands();
-    updateScores();
-
-    hitButton.disabled = false;
-    standButton.disabled = false;
-    playAgainButton.style.display = 'none';
-    messageElement.textContent = '';
 }
 
-// Create a deck of cards
+// Create a new deck of cards
 function createDeck() {
     deck = [];
     const suits = ['♠', '♥', '♦', '♣'];
@@ -81,7 +48,7 @@ function dealCard(hand) {
     hand.push(deck.pop());
 }
 
-// Render the hands on the page
+// Render cards to the screen
 function renderHands() {
     playerCardsElement.innerHTML = '';
     dealerCardsElement.innerHTML = '';
@@ -94,16 +61,7 @@ function renderHands() {
     }
 }
 
-// Update the scores
-function updateScores() {
-    const playerScore = calculateScore(playerHand);
-    const dealerScore = calculateScore(dealerHand);
-    
-    document.getElementById('player-score').textContent = `Your Score: ${playerScore}`;
-    document.getElementById('dealer-score').textContent = `Dealer's Score: ${dealerScore}`;
-}
-
-// Calculate the score for a hand
+// Calculate the score for a given hand
 function calculateScore(hand) {
     let score = 0;
     let aceCount = 0;
@@ -128,33 +86,7 @@ function calculateScore(hand) {
     return score;
 }
 
-// Handle "Hit" button click
-hitButton.addEventListener('click', () => {
-    if (gameOver) return;
-
-    dealCard(playerHand);
-    renderHands();
-    updateScores();
-
-    if (calculateScore(playerHand) > 21) {
-        endGame('You busted! Dealer wins.');
-    }
-});
-
-// Handle "Stand" button click
-standButton.addEventListener('click', () => {
-    if (gameOver) return;
-
-    while (calculateScore(dealerHand) < 17) {
-        dealCard(dealerHand);
-    }
-
-    renderHands();
-    updateScores();
-    checkGameOver();
-});
-
-// Check the game outcome
+// Handle the game over logic
 function checkGameOver() {
     const playerScore = calculateScore(playerHand);
     const dealerScore = calculateScore(dealerHand);
@@ -174,24 +106,84 @@ function checkGameOver() {
         balance += currentBet;  // Tie, player gets their bet back
     }
 
-    // Update the displayed balance after the game ends
-    balanceElement.textContent = `Balance: $${balance}`;
+    // Update the balance on the page
+    updateBalance();
 }
 
-
-
-// End the game and display the message
+// End the game and display the result
 function endGame(message) {
     gameOver = true;
     messageElement.textContent = message;
-    balanceElement.textContent = `Balance: $${balance}`;
-
     hitButton.disabled = true;
     standButton.disabled = true;
     playAgainButton.style.display = 'inline-block';
 }
 
-// Handle "Play Again" button click
-playAgainButton.addEventListener('click', () => {
-    startGame
+// Handle the 'Hit' button click
+hitButton.addEventListener('click', () => {
+    if (gameOver) return;
 
+    dealCard(playerHand);
+    renderHands();
+
+    if (calculateScore(playerHand) > 21) {
+        endGame('You busted! Dealer wins.');
+    }
+});
+
+// Handle the 'Stand' button click
+standButton.addEventListener('click', () => {
+    if (gameOver) return;
+
+    while (calculateScore(dealerHand) < 17) {
+        dealCard(dealerHand);
+    }
+
+    renderHands();
+    checkGameOver();
+});
+
+// Handle the 'Place Bet' button click
+placeBetButton.addEventListener('click', () => {
+    const betAmount = parseInt(betInput.value);
+
+    if (betAmount <= 0 || betAmount > balance) {
+        alert("Please place a valid bet.");
+        return;
+    }
+
+    currentBet = betAmount;
+    balance -= currentBet;
+    updateBalance();  // Update balance display
+
+    startGame();
+});
+
+// Start a new game
+function startGame() {
+    createDeck();
+    shuffleDeck();
+    playerHand = [];
+    dealerHand = [];
+    gameOver = false;
+    dealCard(playerHand);
+    dealCard(dealerHand);
+    dealCard(playerHand);
+    dealCard(dealerHand);
+
+    renderHands();
+    updateBalance();
+
+    hitButton.disabled = false;
+    standButton.disabled = false;
+    playAgainButton.style.display = 'none';
+    messageElement.textContent = '';
+}
+
+// Handle the 'Play Again' button click
+playAgainButton.addEventListener('click', () => {
+    startGame();
+});
+
+// Start the game on initial load
+startGame();
