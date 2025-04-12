@@ -1,56 +1,49 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #2a2a2a;
-    color: white;
     margin: 0;
 }
 
 .game-container {
-    text-align: center;
+    background-color: #2a2a2a;
     padding: 20px;
-    border: 2px solid #fff;
     border-radius: 10px;
-    width: 300px;
-    background-color: #333;
-}
-
-h1 {
-    color: #f0f0f0;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 0 15px #000;
 }
 
 .cards {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-}
-
-.player-cards, .dealer-cards {
-    flex: 1;
     text-align: left;
 }
 
+.player-cards, .dealer-cards {
+    width: 48%;
+}
+
 button {
-    margin: 10px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
     background-color: #4CAF50;
     color: white;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 button:hover {
     background-color: #45a049;
 }
 
-.game-info p {
-    margin: 5px;
-}
 #play-again-button {
     background-color: #2196F3;
 }
@@ -58,4 +51,9 @@ button:hover {
 #play-again-button:hover {
     background-color: #0b7dda;
 }
+
+.game-info p {
+    margin: 5px 0;
+}
+
 
