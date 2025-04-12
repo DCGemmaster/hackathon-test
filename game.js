@@ -56,18 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let card of playerHand) {
       playerCardsElement.innerHTML += `<div class="card">${card.value} ${card.suit}</div>`;
     }
-
     for (let card of dealerHand) {
       dealerCardsElement.innerHTML += `<div class="card">${card.value} ${card.suit}</div>`;
     }
 
-    updateScores();
+    updateScores(); // This is where we update the score every time the hands are rendered
   }
 
   function calculateScore(hand) {
     let score = 0;
     let aceCount = 0;
-
     for (let card of hand) {
       if (card.value === 'A') {
         score += 11;
@@ -78,12 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
         score += parseInt(card.value);
       }
     }
-
     while (score > 21 && aceCount > 0) {
       score -= 10;
       aceCount--;
     }
-
     return score;
   }
 
@@ -95,19 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
       endGame("You busted! Dealer wins.");
     } else if (dealerScore > 21) {
       endGame("Dealer busted! You win!");
-      balance += currentBet * 2;
+      balance += currentBet * 2; // Player wins (gets back bet + winnings)
     } else if (playerScore > dealerScore) {
       endGame(`You win! You earned $${currentBet}`);
-      balance += currentBet * 2;
+      balance += currentBet * 2; // Player wins (gets back bet + winnings)
     } else if (dealerScore > playerScore) {
       endGame(`Dealer wins! You lost $${currentBet}`);
     } else {
       endGame("It's a tie! You get your bet back.");
-      balance += currentBet;
+      balance += currentBet; // Tie, player gets their bet back
     }
 
-    updateBalance();
-    updateScores();
+    updateBalance(); // Update balance after game ends
+    updateScores(); // Update scores again just in case
   }
 
   function endGame(message) {
@@ -116,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hitButton.disabled = true;
     standButton.disabled = true;
     playAgainButton.style.display = 'inline-block';
-    updateScores();
   }
 
   hitButton.addEventListener('click', () => {
@@ -152,6 +147,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   playAgainButton.addEventListener('click', () => {
     startGame();
+    // Reset currentBet for new round
+    currentBet = 0;
+    betInput.value = ''; // Clear the bet input field
+    updateBalance();
   });
 
   function startGame() {
@@ -173,6 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
     messageElement.textContent = '';
   }
 
-  // Start game on DOM load
+  // Init
   startGame();
 });
