@@ -128,8 +128,10 @@ hitButton.addEventListener('click', () => {
 
     if (calculateScore(playerHand) > 21) {
         endGame('You busted! Dealer wins.');
+        updateBalance();  // <--- this was missing
     }
 });
+
 
 // Handle the 'Stand' button click
 standButton.addEventListener('click', () => {
