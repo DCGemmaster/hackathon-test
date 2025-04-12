@@ -1,4 +1,4 @@
-/* Global Styles */
+/* General Styling */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f4;
@@ -21,7 +21,6 @@ body {
 h1 {
   font-size: 2.5em;
   margin-bottom: 20px;
-  color: #333;
 }
 
 .info {
@@ -30,7 +29,6 @@ h1 {
 
 #balance {
   font-size: 1.3em;
-  color: #333;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -79,10 +77,6 @@ button:hover {
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-}
-
-button:active {
-  background-color: #218838;
 }
 
 .cards {
