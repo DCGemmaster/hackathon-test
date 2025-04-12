@@ -5,6 +5,26 @@ let deck = [];
 let playerHand = [];
 let dealerHand = [];
 let gameOver = false;
+let balance = 100;  // Starting balance
+let currentBet = 0; // Amount the player bets for each round
+
+
+// Place the bet when the player clicks the "Place Bet" button
+document.getElementById('place-bet').addEventListener('click', () => {
+    const betInput = document.getElementById('bet');
+    const betAmount = parseInt(betInput.value);
+    
+    if (betAmount <= 0 || betAmount > balance) {
+        alert("Please place a valid bet.");
+        return;
+    }
+    
+    currentBet = betAmount;
+    balance -= currentBet;  // Deduct bet from balance
+    document.getElementById('balance').textContent = `Balance: $${balance}`;
+    
+    startGame();  // Start the game once bet is placed
+});
 
 function createDeck() {
     deck = [];
@@ -86,19 +106,22 @@ function checkGameOver() {
     const dealerScore = calculateScore(dealerHand);
 
     if (playerScore > 21) {
-        endGame('You busted! Dealer wins.');
+        endGame("You busted! Dealer wins.");
     } else if (dealerScore > 21) {
-        endGame('Dealer busted! You win!');
+        endGame("Dealer busted! You win!");
     } else if (gameOver) {
         if (playerScore > dealerScore) {
-            endGame('You win!');
+            endGame(`You win! You earned $${currentBet}`);
+            balance += currentBet * 2;  // Player wins the bet (gets it back + double)
         } else if (dealerScore > playerScore) {
-            endGame('Dealer wins!');
+            endGame(`Dealer wins! You lost $${currentBet}`);
         } else {
-            endGame('It\'s a tie!');
+            endGame("It's a tie! You get your bet back.");
+            balance += currentBet;  // Tie, return the bet
         }
     }
 }
+
 
 function endGame(message) {
     gameOver = true;
