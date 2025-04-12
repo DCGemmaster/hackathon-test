@@ -28,16 +28,35 @@ h1 {
   margin-bottom: 20px;
 }
 
-label {
-  font-size: 1.1em;
-  margin-right: 10px;
+#balance {
+  font-size: 1.3em;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-input[type="number"] {
-  padding: 8px;
-  font-size: 1.1em;
-  width: 80px;
-  text-align: center;
+.chip-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.chip {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chip:hover {
+  background-color: #218838;
 }
 
 button {
@@ -59,3 +78,56 @@ button:hover {
 
 button:disabled {
   background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:active {
+  background-color: #218838;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.card {
+  background-color: #f0f0f0;
+  padding: 15px;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1.2em;
+  font-weight: bold;
+  width: 50px;
+  text-align: center;
+  color: #333;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-info {
+  margin-top: 20px;
+}
+
+.game-info p {
+  font-size: 1.2em;
+  margin: 5px 0;
+}
+
+#message {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
