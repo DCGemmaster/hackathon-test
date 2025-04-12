@@ -157,5 +157,3 @@ document.getElementById('play-again-button').addEventListener('click', () => {
 });
 
 startGame();
-
-
