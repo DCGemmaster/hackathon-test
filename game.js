@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let gameOver = false;
 
   const balanceElement = document.getElementById('balance');
-  const betInput = document.getElementById('bet');
   const placeBetButton = document.getElementById('place-bet');
   const hitButton = document.getElementById('hit-button');
   const standButton = document.getElementById('stand-button');
@@ -17,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const dealerCardsElement = document.getElementById('dealer-cards');
   const playerScoreElement = document.getElementById('player-score');
   const dealerScoreElement = document.getElementById('dealer-score');
+  const chipElements = document.querySelectorAll('.chip');
 
   function updateBalance() {
     balanceElement.textContent = `Balance: $${balance}`;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       dealerCardsElement.innerHTML += `<div class="card">${card.value} ${card.suit}</div>`;
     }
 
-    updateScores(); // This is where we update the score every time the hands are rendered
+    updateScores();
   }
 
   function calculateScore(hand) {
@@ -91,19 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
       endGame("You busted! Dealer wins.");
     } else if (dealerScore > 21) {
       endGame("Dealer busted! You win!");
-      balance += currentBet * 2; // Player wins (gets back bet + winnings)
+      balance += currentBet * 2;
     } else if (playerScore > dealerScore) {
       endGame(`You win! You earned $${currentBet}`);
-      balance += currentBet * 2; // Player wins (gets back bet + winnings)
+      balance += currentBet * 2;
     } else if (dealerScore > playerScore) {
       endGame(`Dealer wins! You lost $${currentBet}`);
     } else {
       endGame("It's a tie! You get your bet back.");
-      balance += currentBet; // Tie, player gets their bet back
+      balance += currentBet;
     }
 
-    updateBalance(); // Update balance after game ends
-    updateScores(); // Update scores again just in case
+    updateBalance();
+    updateScores();
   }
 
   function endGame(message) {
@@ -133,23 +133,26 @@ document.addEventListener('DOMContentLoaded', () => {
     checkGameOver();
   });
 
+  chipElements.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const chipValue = parseInt(chip.getAttribute('data-value'));
+      currentBet += chipValue;
+      balance -= chipValue;
+      updateBalance();
+    });
+  });
+
   placeBetButton.addEventListener('click', () => {
-    const betAmount = parseInt(betInput.value);
-    if (betAmount <= 0 || betAmount > balance) {
+    if (currentBet <= 0 || currentBet > balance) {
       alert("Please place a valid bet.");
       return;
     }
-    currentBet = betAmount;
-    balance -= currentBet;
-    updateBalance();
     startGame();
   });
 
   playAgainButton.addEventListener('click', () => {
     startGame();
-    // Reset currentBet for new round
     currentBet = 0;
-    betInput.value = ''; // Clear the bet input field
     updateBalance();
   });
 
@@ -165,13 +168,11 @@ document.addEventListener('DOMContentLoaded', () => {
     dealCard(dealerHand);
     renderHands();
     updateBalance();
-    updateScores();
     hitButton.disabled = false;
     standButton.disabled = false;
     playAgainButton.style.display = 'none';
     messageElement.textContent = '';
   }
 
-  // Init
   startGame();
 });
