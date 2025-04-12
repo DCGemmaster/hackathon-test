@@ -18,15 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const dealerScoreElement = document.getElementById('dealer-score');
   const chipElements = document.querySelectorAll('.chip');
 
+  // Function to update balance on the screen
   function updateBalance() {
     balanceElement.textContent = `Balance: $${balance}`;
   }
 
+  // Function to update scores on the screen
   function updateScores() {
     playerScoreElement.textContent = `Your Score: ${calculateScore(playerHand)}`;
     dealerScoreElement.textContent = `Dealer's Score: ${calculateScore(dealerHand)}`;
   }
 
+  // Create the deck of cards
   function createDeck() {
     deck = [];
     const suits = ['♠', '♥', '♦', '♣'];
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Shuffle the deck using Fisher-Yates algorithm
   function shuffleDeck() {
     for (let i = deck.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -45,10 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Deal a card to a given hand
   function dealCard(hand) {
     hand.push(deck.pop());
   }
 
+  // Render the player's and dealer's hands on the screen
   function renderHands() {
     playerCardsElement.innerHTML = '';
     dealerCardsElement.innerHTML = '';
@@ -63,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScores();
   }
 
+  // Calculate the score of a hand
   function calculateScore(hand) {
     let score = 0;
     let aceCount = 0;
@@ -83,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return score;
   }
 
+  // Check if the game is over and determine the winner
   function checkGameOver() {
     const playerScore = calculateScore(playerHand);
     const dealerScore = calculateScore(dealerHand);
@@ -106,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScores();
   }
 
+  // End the game and display a message
   function endGame(message) {
     gameOver = true;
     messageElement.textContent = message;
@@ -113,6 +122,43 @@ document.addEventListener('DOMContentLoaded', () => {
     standButton.disabled = true;
     playAgainButton.style.display = 'inline-block';
   }
+
+  // Start the game and reset hands, deck, etc.
+  function startGame() {
+    createDeck();
+    shuffleDeck();
+    playerHand = [];
+    dealerHand = [];
+    gameOver = false;
+    dealCard(playerHand);
+    dealCard(dealerHand);
+    dealCard(playerHand);
+    dealCard(dealerHand);
+    renderHands();
+    updateBalance();
+    hitButton.disabled = false;
+    standButton.disabled = false;
+    playAgainButton.style.display = 'none';
+    messageElement.textContent = '';
+  }
+
+  // Event listeners for buttons and chips
+  chipElements.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const chipValue = parseInt(chip.getAttribute('data-value'));
+      currentBet += chipValue;
+      balance -= chipValue;
+      updateBalance();
+    });
+  });
+
+  placeBetButton.addEventListener('click', () => {
+    if (currentBet <= 0 || currentBet > balance) {
+      alert("Please place a valid bet.");
+      return;
+    }
+    startGame();
+  });
 
   hitButton.addEventListener('click', () => {
     if (gameOver) return;
@@ -133,46 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
     checkGameOver();
   });
 
-  chipElements.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const chipValue = parseInt(chip.getAttribute('data-value'));
-      currentBet += chipValue;
-      balance -= chipValue;
-      updateBalance();
-    });
-  });
-
-  placeBetButton.addEventListener('click', () => {
-    if (currentBet <= 0 || currentBet > balance) {
-      alert("Please place a valid bet.");
-      return;
-    }
-    startGame();
-  });
-
   playAgainButton.addEventListener('click', () => {
     startGame();
     currentBet = 0;
     updateBalance();
   });
 
-  function startGame() {
-    createDeck();
-    shuffleDeck();
-    playerHand = [];
-    dealerHand = [];
-    gameOver = false;
-    dealCard(playerHand);
-    dealCard(dealerHand);
-    dealCard(playerHand);
-    dealCard(dealerHand);
-    renderHands();
-    updateBalance();
-    hitButton.disabled = false;
-    standButton.disabled = false;
-    playAgainButton.style.display = 'none';
-    messageElement.textContent = '';
-  }
-
+  // Initialize the game
   startGame();
 });
