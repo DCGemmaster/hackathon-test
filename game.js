@@ -130,6 +130,16 @@ function checkGameOver() {
         document.getElementById('stand-button').disabled = true;
     }
 }
+// Handle the "Play Again" button
+document.getElementById('play-again-button').addEventListener('click', function () {
+    // Reset buttons
+    document.getElementById('hit-button').disabled = false;
+    document.getElementById('stand-button').disabled = false;
+    document.getElementById('play-again-button').style.display = 'none';
+    
+    // Start a new game
+    startGame();
+});
 
 // Start a new game when the page loads
 startGame();
